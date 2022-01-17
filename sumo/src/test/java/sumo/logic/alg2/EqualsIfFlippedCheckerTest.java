@@ -21,9 +21,9 @@ public class EqualsIfFlippedCheckerTest {
     }
 
     @Test
-    public void shouldTheSameGraphsBeEqual() {
+    public void shouldTheSameTreesBeEqual() {
 
-        //given graphs x1 and y1
+        //given trees x1 and y1
         //
         // x1:    1      y1:    1
         //      /  \          /  \
@@ -51,9 +51,9 @@ public class EqualsIfFlippedCheckerTest {
 
 
     @Test
-    public void shouldFlippedGraphsBeEqual() {
+    public void shouldFlippedTreesBeEqual() {
 
-        //given graphs x1 and y1
+        //given trees x1 and y1
         //
         // x1:    1      y1:    1
         //      /  \          /  \
@@ -91,8 +91,8 @@ public class EqualsIfFlippedCheckerTest {
     }
 
     @Test
-    public void shouldDifferentGraphsBeNotEqualEvenIfFlipped() {
-        //given graphs a and b
+    public void shouldDifferentTreesBeNotEqualEvenIfFlipped() {
+        //given trees a and b
 
         //    a.  /\    b. /  \
         //       / /\      \  /\
