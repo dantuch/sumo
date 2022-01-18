@@ -18,6 +18,8 @@ public class EqualsIfFlippedCheckerTest {
         // then
         Assert.assertTrue("x1 and y1 are nulls and thus equal",
                 equalsIfFlippedChecker.isEqual(x1, y1));
+        Assert.assertTrue("x1 and y1 are nulls and thus equal",
+                equalsIfFlippedChecker.isEqualBF(x1, y1));
     }
 
     @Test
@@ -30,23 +32,25 @@ public class EqualsIfFlippedCheckerTest {
         //    2     3       2     3
         //   /             /
         //  4             4 
-        
+
         Node x4 = new Node("x4");
         Node x2 = new Node(x4, null, "x2");
         Node x3 = new Node("x3");
         Node x1 = new Node(x2, x3, "x1");
-        
+
         Node y4 = new Node("y4");
         Node y2 = new Node(y4, null, "y2");
         Node y3 = new Node("y3");
         Node y1 = new Node(y2, y3, "y1");
-        
+
         // when
         EqualsIfFlippedChecker equalsIfFlippedChecker = new EqualsIfFlippedChecker();
 
         // then
         Assert.assertTrue("x1 and y1 are equal even without flipping",
                 equalsIfFlippedChecker.isEqual(x1, y1));
+        Assert.assertTrue("x1 and y1 are equal even without flipping",
+                equalsIfFlippedChecker.isEqualBF(x1, y1));
     }
 
 
@@ -88,6 +92,8 @@ public class EqualsIfFlippedCheckerTest {
         // then
         Assert.assertTrue("x1 and y1 are equals if flipped",
                 equalsIfFlippedChecker.isEqual(x1, y1));
+        Assert.assertTrue("x1 and y1 are equals if flipped",
+                equalsIfFlippedChecker.isEqualBF(x1, y1));
     }
 
     @Test
@@ -134,6 +140,31 @@ public class EqualsIfFlippedCheckerTest {
         // then
         Assert.assertFalse("a and b are too different",
                 equalsIfFlippedChecker.isEqual(a, b));
+        Assert.assertFalse("a and b are too different",
+                equalsIfFlippedChecker.isEqualBF(a, b));
     }
 
+
+    @Test
+    public void shouldRandomTreeWorkAsInBruteForce() {
+        // given
+        int testCasesNo = 1000000;
+        int depthOfTreesToBeGenerated = 3;
+
+        EqualsIfFlippedChecker equalsIfFlippedChecker = new EqualsIfFlippedChecker();
+
+        // when
+        TreeGenerator treeGenerator = new TreeGenerator();
+        for (int i = 0; i < testCasesNo; i++) {
+            Node a = treeGenerator.generateRandomTreeWithDepth(depthOfTreesToBeGenerated);
+            Node b = treeGenerator.generateRandomTreeWithDepth(depthOfTreesToBeGenerated);
+            // then
+            boolean equalBF = equalsIfFlippedChecker.isEqualBF(a, b);
+            boolean equal = equalsIfFlippedChecker.isEqual(a, b);
+            if (equal != equalBF ) {
+                System.out.println("error");
+            }
+            Assert.assertEquals(equalBF, equal);
+        }
+    }
 }

@@ -34,7 +34,17 @@ public class EqualsIfFlippedChecker {
 
     private Map<Node, Integer> nodesToChildrenNumber = new HashMap<>();
 
+
+    public boolean isEqualBF(Node x, Node y) {
+        if(x == y) return true;
+        if(x == null || y == null) return false;
+        return (isEqualBF(x.left, y.left) && isEqualBF(x.right, y.right))
+                || (isEqualBF(x.left, y.right) && isEqualBF(x.right, y.left));
+    }
+
+
     public boolean isEqual(Node x, Node y) {
+        nodesToChildrenNumber = new HashMap<>();
         Set<List<Integer>> parsedX = parseNodes(x);
         Set<List<Integer>> parsedY = parseNodes(y);
         return parsedX.equals(parsedY);
