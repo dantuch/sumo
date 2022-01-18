@@ -36,8 +36,8 @@ public class EqualsIfFlippedChecker {
 
 
     public boolean isEqualBF(Node x, Node y) {
-        if(x == y) return true;
-        if(x == null || y == null) return false;
+        if (x == y) return true;
+        if (x == null || y == null) return false;
         return (isEqualBF(x.left, y.left) && isEqualBF(x.right, y.right))
                 || (isEqualBF(x.left, y.right) && isEqualBF(x.right, y.left));
     }
@@ -45,27 +45,29 @@ public class EqualsIfFlippedChecker {
 
     public boolean isEqual(Node x, Node y) {
         nodesToChildrenNumber = new HashMap<>();
-        Set<List<Integer>> parsedX = parseNodes(x);
-        Set<List<Integer>> parsedY = parseNodes(y);
+        Map<List<Integer>, Integer> parsedX = parseNodes(x);
+        Map<List<Integer>, Integer> parsedY = parseNodes(y);
         return parsedX.equals(parsedY);
     }
 
-    private Set<List<Integer>> parseNodes(Node node) {
-        Set<List<Integer>> connections = new LinkedHashSet<>();
+    private Map<List<Integer>, Integer> parseNodes(Node node) {
+        Map<List<Integer>, Integer> connections = new HashMap<>();
         parseRecursive(node, connections, new LinkedList<>());
         return connections;
     }
 
-    private void parseRecursive(Node node, Set<List<Integer>> values, LinkedList<Node> parents) {
+    private void parseRecursive(Node node, Map<List<Integer>, Integer> values, LinkedList<Node> parents) {
         if (node == null) {
             return;
         }
         if (node.right == null && node.left == null) {
             // its a leaf
-            values.add(
-                    parents.stream()
-                            .map(p -> nodesToChildrenNumber.getOrDefault(p, countChildren(p)))
-                            .collect(Collectors.toList()));
+
+            List<Integer> childrenNumberInParents = parents.stream()
+                    .map(p -> nodesToChildrenNumber.getOrDefault(p, countChildren(p)))
+                    .collect(Collectors.toList());
+            Integer orDefault = values.getOrDefault(childrenNumberInParents, 0);
+            values.put(childrenNumberInParents, ++orDefault);
         }
 
         parents.add(node);

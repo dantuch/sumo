@@ -163,6 +163,7 @@ public class EqualsIfFlippedCheckerTest {
             boolean equal = equalsIfFlippedChecker.isEqual(a, b);
             if (equal != equalBF ) {
                 System.out.println("error");
+                equalsIfFlippedChecker.isEqual(a, b);
             }
             Assert.assertEquals(equalBF, equal);
         }
